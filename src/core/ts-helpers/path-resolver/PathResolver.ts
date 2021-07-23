@@ -1,14 +1,13 @@
 import upath from 'upath';
 import { createMatchPath, loadConfig, MatchPath } from 'tsconfig-paths';
 import { isPathRelative } from '../../utils/isPathRelative';
-import { TsConfigProvider } from '../../ts-config-path-provider/TsConfigProvider';
 import { extensionsToResolve } from './constants';
 
 export class PathResolver {
     private static resolver: MatchPath;
 
     static init(): void {
-        const config = loadConfig(TsConfigProvider.tsConfigPath);
+        const config = loadConfig();
 
         if (config.resultType === 'failed') {
             throw new Error('Can not load tsconfig file');

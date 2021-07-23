@@ -7,16 +7,14 @@ import minimatch from 'minimatch';
 import { diConfig } from '../../external/config';
 import { registerAndTransformContext } from '../build-context/registerAndTransformContext';
 
-export const transformTest: Record<string, number> = {};
+interface SourceFile extends ts.SourceFile {
+    bindDiagnostics: ts.Diagnostic[];
+}
 
 export const getTransformerFactory = (): ts.TransformerFactory<ts.SourceFile> => context => {
     return sourceFile => {
         if (minimatch(sourceFile.fileName, diConfig.diConfigPattern!)) {
-            // console.time(`Context transformed: ${sourceFile.fileName}`);
             const transformedContext = registerAndTransformContext(context, sourceFile);
-            // transformTest[sourceFile.fileName] = transformTest[sourceFile.fileName] ? transformTest[sourceFile.fileName] + 1 : 1;
-            // console.log(transformTest);
-            // console.timeEnd(`Context transformed: ${sourceFile.fileName}`);
 
             return transformedContext;
         }

@@ -5,9 +5,8 @@ export class ProgramRepository {
     private static _program: ts.Program | undefined;
 
     static initProgram(contextPaths: Array<string>): void {
-        const configFile = ts.readConfigFile(TsConfigProvider.tsConfigPath, ts.sys.readFile);
         const compilerOptions = ts.parseJsonConfigFileContent(
-            configFile.config,
+            TsConfigProvider.tsConfig,
             ts.sys,
             './',
         );

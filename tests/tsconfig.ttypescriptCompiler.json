@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "ts-node": {
+    "compiler": "ttypescript",
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "plugins": [
+      { "transform": "dependency-injection-cat/transformers/typescript" },
+      { "transform": "dependency-injection-cat/plugins/typescript/ReportErrorsTypescriptPlugin" }
+    ]
+  }
+}

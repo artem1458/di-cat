@@ -1,0 +1,38 @@
+name: pr-head
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2.3.0
+        with:
+          node-version: '12.x'
+
+      - name: Install DI Cat Dependencies
+        run: yarn
+
+      - name: Build DI-Cat
+        run: yarn run build
+
+      - name: Install Test Dependencies
+        run: cd tests && yarn
+
+      - name: ttypescript tests
+        run: cd tests && yarn run test:ttypescript
+
+      - name: webpack + ttypescript tests
+        run: cd tests && yarn run test:webpack-ttypescript

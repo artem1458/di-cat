@@ -21,12 +21,10 @@
   "scripts": {
     "lint": "eslint './src/**/*.ts'",
     "build": "sh scripts/build.sh",
-    "build-all": "sh scripts/buildAll.sh",
-    "build-all-start": "sh scripts/buildAllStart.sh"
+    "build-and-test": "sh scripts/buildAndTest.sh"
   },
   "devDependencies": {
     "@babel/runtime": "^7.14.0",
-    "@types/find-up": "^4.0.0",
     "@types/glob": "^7.1.2",
     "@types/glob-to-regexp": "^0.4.0",
     "@types/graphlib": "^2.1.7",
@@ -48,7 +46,6 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "find-up": "^5.0.0",
     "glob": "^7.1.6",
     "graphlib": "^2.1.8",
     "json-beautify": "^1.1.1",

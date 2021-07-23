@@ -1,0 +1,25 @@
+{
+  "name": "di-cat-tests",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test:webpack-ttypescript": "mochapack --webpack-config webpack.ttypescript.config.ts test/**/*.test.ts",
+    "test:ttypescript": "env TS_NODE_PROJECT=\"tsconfig.ttypescriptCompiler.json\"  mocha -r ts-node/register 'test/**/*.test.ts'"
+  },
+  "dependencies": {
+    "dependency-injection-cat": "../dist",
+    "mocha": "^9.0.2",
+    "ts-patch": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/mocha": "^9.0.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "mochapack": "^2.1.2",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.1.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "ttypescript": "^1.5.12"
+  }
+}

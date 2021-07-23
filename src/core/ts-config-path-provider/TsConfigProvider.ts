@@ -1,17 +1,24 @@
-import findUp from 'find-up';
+import { ConfigLoaderSuccessResult } from 'tsconfig-paths/lib/config-loader';
+import { loadConfig } from 'tsconfig-paths';
 
 export class TsConfigProvider {
-    private static configPath: string | null = null;
+    private static config: ConfigLoaderSuccessResult | null = null;
 
-    static get tsConfigPath(): string {
-        if (this.configPath === null) {
-            throw new Error('Can\'t find tsConfig file');
+    static get tsConfig(): ConfigLoaderSuccessResult {
+        if (this.config === null) {
+            throw new Error('Can not load tsconfig file');
         }
 
-        return this.configPath;
+        return this.config;
     }
 
     static init() {
-        this.configPath = findUp.sync('tsconfig.json') ?? null;
+        const configLoaderResult = loadConfig();
+
+        if (configLoaderResult.resultType === 'failed') {
+            throw new Error('Can not load tsconfig file');
+        }
+
+        this.config = configLoaderResult;
     }
 }
