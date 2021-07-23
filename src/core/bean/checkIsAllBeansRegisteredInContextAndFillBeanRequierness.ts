@@ -5,7 +5,7 @@ import { getNodeSourceDescriptorDeep } from '../ts-helpers/node-source-descripto
 import { removeQuotesFromString } from '../utils/removeQuotesFromString';
 import { BeanRepository } from './BeanRepository';
 
-//Only for not-global contexts
+//Only for non-global contexts
 export const checkIsAllBeansRegisteredInContextAndFillBeanRequierness = (contextDescriptor: IContextDescriptor) => {
     const extendsHeritageClause = contextDescriptor.node.heritageClauses
         ?.find(clause => clause.token === ts.SyntaxKind.ExtendsKeyword);

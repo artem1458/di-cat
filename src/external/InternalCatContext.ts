@@ -1,5 +1,4 @@
-import { IBeanConfig } from './decorators/Bean';
-import { IInternalCatContext } from './IInternalCatContext';
+import { IFullBeanConfig, IInternalCatContext } from './IInternalCatContext';
 import { NotInitializedConfig } from '../exceptions/runtime/NotInitializedConfig';
 import { BeanNotFoundInContext } from '../exceptions/runtime/BeanNotFoundInContext';
 
@@ -10,7 +9,7 @@ export abstract class InternalCatContext implements IInternalCatContext {
 
     constructor(
         private contextName: string,
-        private beanConfigurationRecord: Record<TBeanName, IBeanConfig>,
+        private beanConfigurationRecord: Record<TBeanName, IFullBeanConfig>,
     ) {}
 
     private singletonMap = new Map<TBeanName, any>();
@@ -56,7 +55,7 @@ export abstract class InternalCatContext implements IInternalCatContext {
         return savedInstance;
     }
 
-    private getBeanConfiguration(beanName: TBeanName): IBeanConfig {
+    private getBeanConfiguration(beanName: TBeanName): IFullBeanConfig {
         const beanConfiguration = this.beanConfigurationRecord[beanName] ?? null;
 
         if (beanConfiguration === null) {
@@ -67,21 +66,22 @@ export abstract class InternalCatContext implements IInternalCatContext {
     }
 
     getBeans(): Record<string, any> {
-        const publicBeansConfigurations: Record<string, IBeanConfig> = {};
-        const beanConfigurationKeys = Object.keys(this.beanConfigurationRecord);
-
-        beanConfigurationKeys.forEach(key => {
+        const publicBeansConfigurations: Record<string, IFullBeanConfig> = {};
+        Object.keys(this.beanConfigurationRecord).forEach(key => {
             const beanConfigRecord = this.beanConfigurationRecord[key];
 
-            if (beanConfigRecord.isPublic) {
+            if (beanConfigRecord?.isPublic) {
                 publicBeansConfigurations[key] = beanConfigRecord;
             }
         });
 
         return Object.keys(publicBeansConfigurations)
-            .reduce((previousValue, currentValue) => ({
-                ...previousValue,
-                [currentValue]: this.getBean(currentValue),
-            }), {});
+            .reduce((previousValue, key) => {
+                Object.defineProperty(previousValue, key, {
+                    get: (): any => this.getBean(key)
+                });
+
+                return previousValue;
+            }, {});
     }
 }

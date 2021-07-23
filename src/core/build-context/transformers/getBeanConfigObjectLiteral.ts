@@ -13,11 +13,11 @@ export function getBeanConfigObjectLiteral(contextDescriptor: IContextDescriptor
                         factory.createIdentifier('scope'),
                         factory.createStringLiteral(bean.scope)
                     ),
-                    factory.createPropertyAssignment(
+                    bean.isPublic && factory.createPropertyAssignment(
                         factory.createIdentifier('isPublic'),
-                        bean.isPublic ? factory.createTrue() : factory.createFalse(),
+                        factory.createTrue(),
                     ),
-                ],
+                ].filter((it): it is ts.PropertyAssignment => Boolean(it)),
                 false
             )
         )

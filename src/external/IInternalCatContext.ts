@@ -1,4 +1,7 @@
-import { IBeanConfig } from './decorators/Bean';
+export interface IFullBeanConfig {
+    scope?: 'prototype' | 'singleton';
+    isPublic?: boolean;
+}
 
 export interface IInternalCatContext {
     config: any;
@@ -9,6 +12,6 @@ export interface IInternalCatContext {
 export type TInternalCatContext = {
     new(
         contextName: string,
-        beanConfigurationRecord: Record<string, IBeanConfig>,
+        beanConfigurationRecord: Record<string, IFullBeanConfig>,
     ): IInternalCatContext
 };

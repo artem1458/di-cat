@@ -7,7 +7,7 @@
   "scripts": {
     "start-test": "webpack serve",
     "build-test": "webpack",
-    "ttsc": "ttsc"
+    "build:ttsc": "ttsc"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

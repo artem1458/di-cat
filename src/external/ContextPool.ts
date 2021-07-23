@@ -1,6 +1,5 @@
 import { NoContextByKey } from '../exceptions/runtime/NoContextByKey';
-import { IBeanConfig } from './decorators/Bean';
-import { TInternalCatContext } from './IInternalCatContext';
+import { IFullBeanConfig, TInternalCatContext } from './IInternalCatContext';
 
 interface IContextProps {
     key: any;
@@ -15,7 +14,7 @@ export class ContextPool {
 
     constructor(
         private contextName: string,
-        private beanConfigurationRecord: Record<TBeanName, IBeanConfig>,
+        private beanConfigurationRecord: Record<TBeanName, IFullBeanConfig>,
         private context: TInternalCatContext,
     ) {}
 
